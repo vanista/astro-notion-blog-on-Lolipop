@@ -35,7 +35,7 @@ const [posts, rankedPosts, tags, numberOfPages, recentPosts, toc] = await Promis
         <NoContents contents={posts} />
       ) : (
         posts.map((post) => (
-          <div class="post" key={post.Slug}>
+          <div class="post" style="margin-bottom: 1.5rem; padding-bottom: 1.5rem;" key={post.Slug}>
             <div class={styles.dateAndTags} style="display: flex; justify-content: flex-start; align-items: center; gap:5px;">
               <PostDate post={post} />
               <PostTags post={post} />
@@ -43,7 +43,7 @@ const [posts, rankedPosts, tags, numberOfPages, recentPosts, toc] = await Promis
             <PostTitle post={post} />
             <PostFeaturedImage post={post} />
             <!-- <PostExcerpt post={post} /> -->
-            <ReadMoreLink post={post} />
+            {/* <ReadMoreLink post={post} /> */}
           </div>
         ))
       )
