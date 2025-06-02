@@ -1,3 +1,4 @@
 dist/**/*
 tmp/**/*
 public/scripts/fslightbox.js
+.github/workflows/*.yml
