@@ -6,13 +6,20 @@ jobs:
   format:
     name: Prettier
     runs-on: ubuntu-latest
-    permissions: # ★ ここから追記
-      contents: write
-      workflows: write # ★ ここまで追記
+    permissions: # ★ ここを修正
+      contents: write # コードの書き込み権限は引き続き必要
 
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v4
+        # GitHub Actionsのデフォルトトークンを使う場合、この部分で permissions を追加することが重要
+        with:
+          persist-credentials: true
+          # GITHUB_TOKEN に workflows 権限を与える
+          # これは checkout アクションのトークンが workflows を変更できるようにするためのもの
+          token: ${{ secrets.GITHUB_TOKEN }} # 明示的にトークンを渡す
+          # 新しいバージョンの checkout アクションでは、これだけでワークフローの書き込み権限も含まれる場合がありますが、
+          # エラーが出続ける場合は、リポジトリの設定でワークフローパーミッションを確認する必要があります。
 
       - uses: actions/setup-node@v4
         with:
@@ -24,3 +31,5 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Format by GitHub Actions
+          # auto-commit-action は GITHUB_TOKEN を使用するため、明示的な token 設定は不要なことが多い
+          # しかし、checkout アクションで token が正しく渡され、必要な権限が付与されていることが重要
