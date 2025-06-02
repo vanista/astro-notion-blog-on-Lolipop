@@ -107,6 +107,49 @@ npm run dev
 2. 取得した測定IDを`PUBLIC_GA_TRACKING_ID`としてGitHub Secretsに追加
 3. この設定により、Google Analytics と Google Search Console の両方が利用可能になります
 
+## 📝 注意事項とトラブルシューティング
+
+このプロジェクトの運用に関する注意事項や、発生しうる問題とその解決策をまとめます。
+
+### 1. フォークの同期と競合解決について
+
+このリポジトリは `otoyo/astro-notion-blog` からフォークされています。元のリポジトリに更新があってフォークを同期する際には、**競合 (Conflict)** が発生する可能性があります。
+
+### 2. GitHub Actionsの権限エラー (ワークフローファイルの更新拒否)
+
+`stefanzweifel/git-auto-commit-action` を使用した際に、以下のようなエラーでプッシュが拒否されることがあります。これは、**GitHub Actionsがワークフローファイルを更新する権限がない**ために発生します。
+
+**解決策:**
+
+1.  **リポジトリのGitHub Actions設定を確認:**
+    * GitHubリポジリトの「Settings」タブを開く。
+    * 左側のサイドバーで「Actions」を展開し、「General」をクリック。
+    * 「Workflow permissions」セクションで**「Read and write permissions」**が選択されていることを確認し、保存する。
+
+2.  **`format.yml` (または自動コミットを使用しているワークフロー) の確認:**
+    * `jobs.<job_name>` の直下に `permissions: contents: write` があることを確認。
+    * `actions/checkout@v4` ステップで `with: token: ${{ secrets.GITHUB_TOKEN }}` が設定されていることを確認。
+
+3.  **`.prettierignore` の確認:**
+    * `npm run format` がワークフローファイル（`.github/workflows/*.yml`）を整形しないよう、`.prettierignore` ファイルに `*.yml` の除外設定が追加されていることを確認する。
+
+### 3. 環境変数が定義されていないエラー (`PUBLIC_GA_TRACKING_ID is not defined`)
+
+デプロイビルド時に、環境変数が定義されていないというエラーが発生した場合。
+
+**解決策:**
+
+1.  GitHubリポジトリのSecretsに環境変数が正しく設定されていることを確認:
+    * 「Settings」→「Secrets and variables」→「Actions」で、必要な環境変数（例: `PUBLIC_GA_TRACKING_ID`）が正確な名前と値で登録されていることを確認する。
+
+2.  デプロイワークフロー (`lolipop.yml`など) で環境変数が正しく渡されていることを確認:
+    * ビルドステップの `env:` ブロックに、`PUBLIC_GA_TRACKING_ID: ${{ secrets.PUBLIC_GA_TRACKING_ID }}` のように記載されていることを確認する。
+
+3.  **`astro.config.mjs` での参照方法を確認:**
+    * `astro.config.mjs` 内で環境変数を参照する際には、`process.env.PUBLIC_GA_TRACKING_ID` のように `process.env.` を使用していることを確認する。
+        例: `'import.meta.env.PUBLIC_GA_TRACKING_ID': JSON.stringify(process.env.PUBLIC_GA_TRACKING_ID)`
+
+
 ## :two_hearts:
 
 astro-notion-blogの開発者さまを支援するには[![GitHub sponsors](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/otoyo)
