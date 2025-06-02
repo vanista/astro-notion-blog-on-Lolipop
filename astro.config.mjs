@@ -45,7 +45,8 @@ export default defineConfig({
   ],
   vite: {
     define: {
-      'import.meta.env.PUBLIC_GA_TRACKING_ID': JSON.stringify(PUBLIC_GA_TRACKING_ID),
+      // 変更点: PUBLIC_GA_TRACKING_ID を process.env.PUBLIC_GA_TRACKING_ID に変更
+      'import.meta.env.PUBLIC_GA_TRACKING_ID': JSON.stringify(process.env.PUBLIC_GA_TRACKING_ID),
     },
   },
 });
