@@ -122,13 +122,11 @@ npm run dev
 **解決策:**
 
 1.  **リポジトリのGitHub Actions設定を確認:**
-
     - GitHubリポジリトの「Settings」タブを開く。
     - 左側のサイドバーで「Actions」を展開し、「General」をクリック。
     - 「Workflow permissions」セクションで**「Read and write permissions」**が選択されていることを確認し、保存する。
 
 2.  **`format.yml` (または自動コミットを使用しているワークフロー) の確認:**
-
     - `jobs.<job_name>` の直下に `permissions: contents: write` があることを確認。
     - `actions/checkout@v4` ステップで `with: token: ${{ secrets.GITHUB_TOKEN }}` が設定されていることを確認。
 
@@ -142,11 +140,9 @@ npm run dev
 **解決策:**
 
 1.  GitHubリポジトリのSecretsに環境変数が正しく設定されていることを確認:
-
     - 「Settings」→「Secrets and variables」→「Actions」で、必要な環境変数（例: `PUBLIC_GA_TRACKING_ID`）が正確な名前と値で登録されていることを確認する。
 
 2.  デプロイワークフロー (`lolipop.yml`など) で環境変数が正しく渡されていることを確認:
-
     - ビルドステップの `env:` ブロックに、`PUBLIC_GA_TRACKING_ID: ${{ secrets.PUBLIC_GA_TRACKING_ID }}` のように記載されていることを確認する。
 
 3.  **`astro.config.mjs` での参照方法を確認:**
