@@ -1,5 +1,5 @@
 ---
-import { PUBLIC_GA_TRACKING_ID, ENABLE_LIGHTBOX } from '../server-constants.ts'
+import { PUBLIC_GA_TRACKING_ID, PUBLIC_ADSENSE_CLIENT_ID, ENABLE_LIGHTBOX } from '../server-constants.ts'
 import { getDatabase } from '../lib/notion/client.ts'
 import { getNavLink, getStaticFilePath, filePath } from '../lib/blog-helpers.ts'
 import '../styles/syntax-coloring.css'
@@ -78,6 +78,17 @@ if (database.Icon && database.Icon.Type === 'file') {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', PUBLIC_GA_TRACKING_ID);
+        </script>
+      </>
+    )}
+    {PUBLIC_ADSENSE_CLIENT_ID && (
+      <>
+        <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${PUBLIC_ADSENSE_CLIENT_ID}`} crossorigin="anonymous" />
+        <script define:vars={{ PUBLIC_ADSENSE_CLIENT_ID }}>
+          (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: PUBLIC_ADSENSE_CLIENT_ID,
+            enable_page_level_ads: true
+          });
         </script>
       </>
     )}
