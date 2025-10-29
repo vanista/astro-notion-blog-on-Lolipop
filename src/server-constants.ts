@@ -10,7 +10,8 @@ export const BASE_PATH =
 
 export const PUBLIC_GA_TRACKING_ID = import.meta.env.PUBLIC_GA_TRACKING_ID
 export const PUBLIC_ADSENSE_CLIENT_ID = import.meta.env.PUBLIC_ADSENSE_CLIENT_ID
-export const PUBLIC_CLARITY_TRACKING_ID = import.meta.env.PUBLIC_CLARITY_TRACKING_ID
+export const PUBLIC_CLARITY_TRACKING_ID = import.meta.env
+  .PUBLIC_CLARITY_TRACKING_ID
 export const NUMBER_OF_POSTS_PER_PAGE = 10
 export const REQUEST_TIMEOUT_MS = parseInt(
   import.meta.env.REQUEST_TIMEOUT_MS || '10000',
